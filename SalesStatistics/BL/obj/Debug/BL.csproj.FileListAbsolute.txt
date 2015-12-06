@@ -1,0 +1,14 @@
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\BL.dll.config
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\BL.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\BL.pdb
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\DAL.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\EntityFramework.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\EntityModels.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\DAL.pdb
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\EntityModels.pdb
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\EntityFramework.xml
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\obj\Debug\BL.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\BL\obj\Debug\BL.pdb
