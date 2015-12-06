@@ -1,0 +1,25 @@
+﻿@model IEnumerable<DAL.Models.Sale>
+@{
+    ViewBag.Title = "Sales";
+}
+@using GridMvc.Html
+
+<h2>Sales</h2>
+
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<link href="~/Content/gridmvc.datepicker.css" rel="stylesheet" />
+<link href="~/Content/gridmvc.datepicker.min.css" rel="stylesheet" />
+
+<div class="code-cut">
+    @Html.Grid(Model).Columns(columns =>
+                    {
+                        columns.Add(c => c.Date).Titled("Date").Format("{0:MM/dd/yyyy}");
+                        columns.Add(c => c.Manager.LastName).Titled("Manager");
+                        columns.Add(c => c.Client.FirstName).Titled("Client name");
+                        columns.Add(c => c.Client.LastName).Titled("Client lastname");
+                        columns.Add(c => c.Product.Name).Titled("Product");
+                        columns.Add(c => c.Sum).Titled("Sum");
+                    }).WithPaging(10).Sortable(true).Filterable(true).WithMultipleFilters()
+</div>
+
+
