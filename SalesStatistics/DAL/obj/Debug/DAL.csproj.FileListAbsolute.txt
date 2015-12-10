@@ -10,3 +10,5 @@ C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\bin\Debug\Ent
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\obj\Debug\DAL.dll
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\obj\Debug\DAL.pdb
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\bin\Debug\AutoMapper.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\bin\Debug\AutoMapper.xml

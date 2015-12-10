@@ -1,34 +1,42 @@
-﻿using DAL.Interfaces;
-using DAL.Models;
-using DAL.Repositories;
+﻿using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DalModels = DAL.Models;
+using BL.Models;
+using DAL.Interfaces;
+using DAL.Repositories;
 
 namespace BL.Handlers
 {
-    public class ClientHandler : ModelHandler<Client, EntityModels.Client>
+    public class ClientHandler : ModelHandler<Client, DalModels.Client>
     {
-        protected IDataRepository<EntityModels.Client> _clientRepository = new ClientRepository();
+        protected static IDataRepository<DalModels.Client> _clientRepository = new ClientRepository();
 
-        protected override Client EntityToModel(EntityModels.Client item)
+        public ClientHandler()
         {
-            return new Client() { Id = item.Id, LastName = item.LastName, FirstName = item.FirstName };
+            Mapper.CreateMap<Client, DalModels.Client>();
+            Mapper.CreateMap<DalModels.Client, Client>();
         }
 
-        protected override EntityModels.Client ModelToEntity(Client item)
-        {
-            return new EntityModels.Client() { Id = item.Id, LastName = item.LastName, FirstName = item.FirstName };
-        }
-
-        protected override IDataRepository<EntityModels.Client> _repository
+        protected override IDataRepository<DalModels.Client> _repository
         {
             get
             {
                 return _clientRepository;
             }
+        }
+
+        protected override Client ConvertToBlModel(DalModels.Client item)
+        {
+            return Mapper.Map<DalModels.Client, Client>(item);
+        }
+
+        protected override DalModels.Client ConvertToDalModel(Client item)
+        {
+            return Mapper.Map<Client, DalModels.Client>(item);
         }
     }
 }

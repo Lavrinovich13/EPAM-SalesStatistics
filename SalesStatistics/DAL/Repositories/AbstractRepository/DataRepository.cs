@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace DAL.AbstractRepository
 {
-    public abstract class DataRepository<T> : IDataRepository<T>
+    public abstract class DataRepository<T, K> : IDataRepository<T>
         where T : class
+        where K : class
     {
+        protected abstract K ConvertToEntity(T item);
+        protected abstract T ConvertToObject(K item);
+
         public virtual void Add(T item)
         {
             using (var context = new EntityModels.SalesDataBaseEntities())
             {
-                context.Entry(item).State = System.Data.Entity.EntityState.Added;
+                context.Entry(ConvertToEntity(item)).State = System.Data.Entity.EntityState.Added;
                 context.SaveChanges();
             }
         }
@@ -23,7 +27,7 @@ namespace DAL.AbstractRepository
         {
             using (var context = new EntityModels.SalesDataBaseEntities())
             {
-                context.Entry(item).State = System.Data.Entity.EntityState.Modified;
+                context.Entry(ConvertToEntity(item)).State = System.Data.Entity.EntityState.Modified;
                 context.SaveChanges();
             }
         }
@@ -32,39 +36,10 @@ namespace DAL.AbstractRepository
         {
             using (var context = new EntityModels.SalesDataBaseEntities())
             {
-                context.Entry(item).State = System.Data.Entity.EntityState.Deleted;
+                context.Entry(ConvertToEntity(item)).State = System.Data.Entity.EntityState.Deleted;
                 context.SaveChanges();
             }
         }
-
-        public virtual IEnumerable<T> GetAll(Func<T, bool> predicate)
-        {
-            IEnumerable<T> list;
-            using (var context = new EntityModels.SalesDataBaseEntities())
-            {
-                list = context
-                    .Set<T>()
-                    .AsNoTracking()
-                    .Where(predicate)
-                    .ToList();
-            }
-            return list ?? new List<T>();
-        }
-
-        public virtual T FindByFields(T item)
-        {
-            T dbItem;
-            using (var context = new EntityModels.SalesDataBaseEntities())
-            {
-                var entityItem = context
-                    .Set<T>()
-                    .ToList()
-                    .FirstOrDefault(x => x.Equals(item));
-                dbItem = entityItem;
-            }
-            return dbItem;
-        }
-
 
         public T FindById(int id)
         {
@@ -74,6 +49,36 @@ namespace DAL.AbstractRepository
                 dbItem = context.Set<T>().Find(id);
             }
             return dbItem;
+        }
+
+        public IEnumerable<T> GetAny(Func<T, bool> predicate)
+        {
+            IEnumerable<T> list;
+            using (var context = new EntityModels.SalesDataBaseEntities())
+            {
+                list = context
+                    .Set<K>()
+                    .AsNoTracking()
+                    .Select(x => ConvertToObject(x))
+                    .Where(predicate)
+                    .ToList();
+            }
+            return list ?? new List<T>();
+        }
+
+        public virtual IEnumerable<T> GetAll()
+        {
+            IEnumerable<T> list;
+            using (var context = new EntityModels.SalesDataBaseEntities())
+            {
+                list = context
+                    .Set<K>()
+                    .AsNoTracking()
+                    .ToList()
+                    .Select(x => ConvertToObject(x))
+                    .ToList();
+            }
+            return list ?? new List<T>();
         }
     }
 }

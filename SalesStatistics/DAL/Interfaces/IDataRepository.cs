@@ -12,8 +12,8 @@ namespace DAL.Interfaces
         void Add(T item);
         void Update(T item);
         void Remove(T item);
-        T FindByFields(T item);
         T FindById(int id);
-        IEnumerable<T> GetAll(Func<T, bool> predicate);
+        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAny(Func<T, bool> predicate);
     }
 }

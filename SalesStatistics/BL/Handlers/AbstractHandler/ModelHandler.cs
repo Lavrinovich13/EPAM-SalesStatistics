@@ -15,33 +15,42 @@ namespace BL.Handlers
     {
         protected abstract IDataRepository<K> _repository { get; }
 
-        protected abstract T EntityToModel(K item);
-        protected abstract K ModelToEntity(T item);
+        protected abstract T ConvertToBlModel(K item);
+        protected abstract K ConvertToDalModel(T item);
 
         public void AddToDb(T item)
         {
-            _repository.Add(ModelToEntity(item));
+            _repository.Add(ConvertToDalModel(item));
         }
 
         public void UpdateInDb(T item)
         {
-            _repository.Update(ModelToEntity(item));
+            _repository.Update(ConvertToDalModel(item));
         }
 
         public void RemoveFromDb(T item)
         {
-            _repository.Remove(ModelToEntity(item));
+            _repository.Remove(ConvertToDalModel(item));
         }
 
         public T FindInDb(int id)
         {
             var entityItem = _repository.FindById(id);
-            return entityItem == null ? null : EntityToModel(entityItem);
+            return entityItem == null ? null : ConvertToBlModel(entityItem);
         }
 
-        public IList<T> GetAll(Func<T, bool> predicate)
+        public IList<T> GetAll()
         {
-            return new List<T>(_repository.GetAll(x => true).Select(x => EntityToModel(x)).Where(x => predicate(x)));
+            return new List<T>(_repository
+                .GetAll()
+                .Select(x => ConvertToBlModel(x)));
+        }
+
+        public IList<T> GetAny(Func<T, bool> predicate)
+        {
+            return new List<T>(_repository
+                .GetAny(x => predicate(ConvertToBlModel(x)))
+                .Select(x => ConvertToBlModel(x)));
         }
     }
 }

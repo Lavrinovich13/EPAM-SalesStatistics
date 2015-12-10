@@ -1,34 +1,42 @@
-﻿using DAL.Interfaces;
-using DAL.Models;
-using DAL.Repositories;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
+using DalModels = DAL.Models;
+using BL.Models;
+using DAL.Interfaces;
+using DAL.Repositories;
 
 namespace BL.Handlers
 {
-    public class ManagerHandler : ModelHandler<Manager, EntityModels.Manager>
+    public class ManagerHandler : ModelHandler<Manager, DalModels.Manager>
     {
-        protected IDataRepository<EntityModels.Manager> _managerRepository = new ManagerRepository();
+        protected static IDataRepository<DalModels.Manager> _managerRepository = new ManagerRepository();
 
-        protected override Manager EntityToModel(EntityModels.Manager item)
+        public ManagerHandler()
         {
-            return new Manager() { Id = item.Id, LastName = item.LastName };
+            Mapper.CreateMap<Manager, DalModels.Manager>();
+            Mapper.CreateMap<DalModels.Manager, Manager>();
         }
 
-        protected override EntityModels.Manager ModelToEntity(Manager item)
+        protected override IDataRepository<DalModels.Manager> _repository
         {
-            return new EntityModels.Manager() { Id = item.Id, LastName = item.LastName };
-        }
-
-        protected override IDataRepository<EntityModels.Manager> _repository
-        {
-            get 
+            get
             {
-                return _managerRepository; 
+                return _managerRepository;
             }
+        }
+
+        protected override Manager ConvertToBlModel(DalModels.Manager item)
+        {
+            return Mapper.Map<DalModels.Manager, Manager>(item);
+        }
+
+        protected override DalModels.Manager ConvertToDalModel(Manager item)
+        {
+            return Mapper.Map<Manager, DalModels.Manager>(item);
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using DAL.AbstractRepository;
+﻿using AutoMapper;
+using DAL.AbstractRepository;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,6 +9,22 @@ using System.Threading.Tasks;
 
 namespace DAL.Repositories
 {
-    public class ClientRepository : DataRepository<EntityModels.Client>
-    {}
+    public class ClientRepository : DataRepository<Client, EntityModels.Client>
+    {
+        public ClientRepository()
+        {
+            Mapper.CreateMap<Client, EntityModels.Client>();
+            Mapper.CreateMap<EntityModels.Client, Client>();
+        }
+
+        protected override EntityModels.Client ConvertToEntity(Client item)
+        {
+            return Mapper.Map<Client, EntityModels.Client>(item); ;
+        }
+
+        protected override Client ConvertToObject(EntityModels.Client item)
+        {
+            return Mapper.Map<EntityModels.Client, Client>(item);
+        }
+    }
 }
