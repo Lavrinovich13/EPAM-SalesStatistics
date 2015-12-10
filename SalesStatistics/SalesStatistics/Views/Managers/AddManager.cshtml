@@ -1,0 +1,20 @@
+﻿@model BL.Models.Manager
+
+<div class="panel panel-default">
+    <div class="panel-heading">Add manager</div>
+    <div class="panel-body">
+        @using(Html.BeginForm())
+        { 
+        <div class="form-group">
+            <label>Manager:</label>
+            @Html.EditorFor(model => model.LastName, new { @class = "form-control" })
+        </div>
+            <input id="addManager" type="submit" value="Add">
+        } 
+    </div>
+    <script type="text/javascript">
+   
+    </script>
+</div>
+
+

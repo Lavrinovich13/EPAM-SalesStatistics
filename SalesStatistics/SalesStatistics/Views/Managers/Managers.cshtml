@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Managers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<SalesStatistics.Models.Manager>
+@using GridMvc.Html
+
+<h2>Managers</h2>
+
+
+<div id="btn-group" class="btn-group">
+    <button type="button" class="btn btn-default" id="addManagerForm">
+        <span class="glyphicon glyphicon-plus"></span> Add sale
+    </button>
+
+    <button type="button" class="btn btn-default" id="refresh">
+        <span class="glyphicon glyphicon-refresh"></span> Refresh
+    </button>
+</div>
+
+<hr />
+
+<div id="grid">
+    @Html.Partial("ManagersGrid", Model)
+</div>
+
+<div id="divAddManager">
+</div>
+
+
+<script type="text/javascript">
+
+    $("#refresh").click(function () {
+        console.log("smth happend");
+        $.ajax({
+            url: '@Url.Action("ManagersGrid")',
+            type: 'POST',
+            dataType: 'html',
+            success: function (result) { FillGrid(result); }
+        });
+    });
+    function FillGrid(result) {
+        $('#grid').html(result);
+    }
+
+    $("#addManagerForm").click(function () {
+        $("#divAddManager").show();
+        $("#btn-group").hide();
+        $("#grid").hide();
+        console.log("smth happend");
+        $.ajax({
+            url: '@Url.Action("AddManager")',
+            type: 'GET',
+            dataType: 'html',
+            success: function (result) { AddManager(result); }
+        });
+    });
+
+    function AddManager(result) {
+        $('#divAddManager').html(result);
+    }
+</script>

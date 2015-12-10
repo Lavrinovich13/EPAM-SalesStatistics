@@ -1,0 +1,11 @@
+﻿@using GridMvc.Html
+@using GridMvc.Sorting
+@model Grid.Mvc.Ajax.GridExtensions.AjaxGrid<SalesStatistics.Models.Manager>
+
+@Html.Grid(Model).Named("grid").Columns(columns =>
+    {
+        columns.Add(c => c.LastName).Titled("Manager").Filterable(true);
+    }).Sortable(true).WithPaging(10)
+
+
+
