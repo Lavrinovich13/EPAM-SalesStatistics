@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using BL.Handlers;
 using BL.Interfaces;
-using Grid.Mvc.Ajax.GridExtensions;
 using SalesStatistics.Models;
 using System;
 using System.Collections.Generic;
@@ -20,13 +19,28 @@ namespace SalesStatistics.Controllers
         public ActionResult Index()
         {
             Mapper.CreateMap<BL.Models.Manager, Manager>();
+            Mapper.CreateMap<Manager, BL.Models.Manager>();
 
+            return View("Managers", GetManagers());
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult Managers()
+        {
+            Mapper.CreateMap<BL.Models.Manager, Manager>();
+
+            return PartialView("ManagersGrid", GetManagers());
+        }
+
+        [HttpGet]
+        [Authorize]
+        public IEnumerable<Manager> GetManagers()
+        {
             var managers = _managersHandler.GetAll();
-            var vmManagers = Mapper.Map<IEnumerable<BL.Models.Manager>, IEnumerable<Manager>>(managers).AsQueryable();
+            var vmManagers = Mapper.Map<IEnumerable<BL.Models.Manager>, IEnumerable<Manager>>(managers);
 
-            var grid = (AjaxGrid<Manager>)new AjaxGridFactory().CreateAjaxGrid(vmManagers, 1, false, 5);
-
-            return View("Managers", grid);
+            return vmManagers;
         }
 
         [HttpGet]
@@ -40,14 +54,40 @@ namespace SalesStatistics.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddManager(Manager manager)
         {
-            Mapper.CreateMap<Manager, BL.Models.Manager>();
-
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _managersHandler.AddToDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
                 return RedirectToAction("Index");
             }
-            return PartialView();
+            return View(manager);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public ActionResult EditManager(int id)
+        {
+            var manager = _managersHandler.FindInDb(id);
+            return View(Mapper.Map<BL.Models.Manager, Manager>(manager));
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public ActionResult EditManager(Manager manager)
+        {
+            if (ModelState.IsValid)
+            {
+                _managersHandler.UpdateInDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
+                return RedirectToAction("Index");
+            }
+            return View(manager);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public void RemoveManager(int id)
+        {
+            var manager = _managersHandler.FindInDb(id);
+            _managersHandler.RemoveFromDb(manager);
         }
     }
 }

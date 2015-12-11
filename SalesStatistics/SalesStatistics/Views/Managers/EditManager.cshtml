@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "EditManager";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@model SalesStatistics.Models.Manager
+<h2>EditManager</h2>
+
+<div class="panel panel-default">
+    <div class="panel-heading">Edit manager</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditManager", "Managers"))
+        {
+            <div class="form-group">
+                <label>Manager:</label>
+                @Html.EditorFor(model => model.LastName, new { @class = "form-control" })
+            </div>
+            <input type="submit" value="Edit">
+        }
+        <button id="cancel">Cancel</button>
+    </div>
+</div>
+

@@ -3,15 +3,15 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 
 }
-@model IEnumerable<SalesStatistics.Models.Manager>
+@model IEnumerable<SalesStatistics.Models.Client>
 @using GridMvc.Html
 
-<h2>Managers</h2>
+<h2>Clients</h2>
 
 
 <div id="btn-group" class="btn-group">
-    <button type="button" class="btn btn-default" id="addManagerForm">
-        <span class="glyphicon glyphicon-plus"></span> Add sale
+    <button type="button" class="btn btn-default" id="addClientForm">
+        <span class="glyphicon glyphicon-plus"></span> Add client
     </button>
 
     <button type="button" class="btn btn-default" id="refresh">
@@ -22,13 +22,13 @@
 <hr />
 
 <div id="grid">
-    @Html.Partial("ManagersGrid", Model)
+    @Html.Partial("ClientsGrid", Model)
 </div>
 
-<div id="divAddManager">
+<div id="divAddClient">
 </div>
 
-<div id="divEditManager">
+<div id="divEditClient">
 </div>
 
 
@@ -38,7 +38,7 @@
         $("#refresh").click(function () {
             console.log("smth happend");
             $.ajax({
-                url: '@Url.Action("Managers")',
+                url: '@Url.Action("Clients")',
                 type: 'GET',
                 dataType: 'html',
                 success: function (result) { FillGrid(result); }
@@ -48,21 +48,21 @@
             $('#grid').html(result);
         }
 
-        $("#addManagerForm").click(function () {
-            $("#divAddManager").show();
+        $("#addClientForm").click(function () {
+            $("#divAddClient").show();
             $("#btn-group").hide();
             $("#grid").hide();
             console.log("smth happend");
             $.ajax({
-                url: '@Url.Action("AddManager")',
+                url: '@Url.Action("AddClient")',
                 type: 'GET',
                 dataType: 'html',
-                success: function (result) { AddManager(result); }
+                success: function (result) { AddClient(result); }
             });
         });
         
-        function AddManager(result) {
-            $('#divAddManager').html(result);
+        function AddClient(result) {
+            $('#divAddClient').html(result);
         }
     });
 </script>

@@ -9,13 +9,14 @@
     @Scripts.Render("~/bundles/modernizr")
 
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
-    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 
-    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/GridMvc/gridmvc.min.js")" type="text/javascript"> </script>
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
+    <link href="@Url.Content("~/Content/Gridmvc.css")" rel="stylesheet" type="text/css" />
+
+    <script src="@Url.Content("~/Scripts/gridmvc.min.js")" type="text/javascript"> </script>
 
 </head>
 <body>
@@ -27,8 +28,8 @@
             <div>
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Sales", "", "")</li>
-                    <li>@Html.ActionLink("Managers", "Managers", "Managers")</li>
-                    <li>@Html.ActionLink("Clients", "", "")</li>
+                    <li>@Html.ActionLink("Managers", "Index", "Managers")</li>
+                    <li>@Html.ActionLink("Clients", "Index", "Clients")</li>
                     <li>@Html.ActionLink("Products", "", "")</li>
                     <li>@Html.ActionLink("Users", "", "")</li>
                 </ul>
@@ -41,7 +42,6 @@
             </div>
         </div>
     </div>
-
     <div class="container body-content">
         @RenderBody()
         <hr />

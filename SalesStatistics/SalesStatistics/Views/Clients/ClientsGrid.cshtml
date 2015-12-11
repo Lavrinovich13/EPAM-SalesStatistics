@@ -1,0 +1,22 @@
+﻿@using GridMvc.Html
+@using GridMvc.Sorting
+@model IEnumerable<SalesStatistics.Models.Client>
+
+<div id="t1">
+    @Html.Grid(Model).Named("grid").Columns(columns =>
+    {
+        columns.Add(c => c.FirstName).Titled("First name").Filterable(true);
+        columns.Add(c => c.LastName).Titled("Last name").Filterable(true);
+        columns.Add()
+                      .Encoded(false)
+                      .Sanitized(false)
+                      .SetWidth(30)
+                      .RenderValueAs(o => Ajax.ActionLink("Edit", "EditClient", new { id = o.Id }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "t1"  }).ToHtmlString());
+        columns.Add()
+        .Encoded(false)
+        .Sanitized(false)
+        .SetWidth(30)
+        .RenderValueAs(o => Html.ActionLink("Remove", "RemoveClient", new { id = o.Id }));
+    }).Sortable(true).WithPaging(10)
+</div>
+
