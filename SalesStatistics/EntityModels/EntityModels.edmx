@@ -51,7 +51,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sales_Managers">
-          <End Role="Managers" Type="Self.Managers" Multiplicity="1" />
+          <End Role="Managers" Type="Self.Managers" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Sales" Type="Self.Sales" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Managers">
@@ -149,7 +151,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Sales_Managers">
-          <End Role="Managers" Type="Self.Manager" Multiplicity="1" />
+          <End Role="Managers" Type="Self.Manager" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="Sales" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Managers">

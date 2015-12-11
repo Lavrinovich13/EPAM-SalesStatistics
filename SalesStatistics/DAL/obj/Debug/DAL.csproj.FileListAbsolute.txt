@@ -12,3 +12,5 @@ C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\obj\Debug\DAL
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\obj\Debug\DAL.pdb
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\bin\Debug\AutoMapper.dll
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\bin\Debug\AutoMapper.xml
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\bin\Debug\ru\EntityFramework.resources.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\DAL\bin\Debug\ru\EntityFramework.SqlServer.resources.dll

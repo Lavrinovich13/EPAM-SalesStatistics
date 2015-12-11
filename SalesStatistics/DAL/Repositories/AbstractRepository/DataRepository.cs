@@ -43,12 +43,12 @@ namespace DAL.AbstractRepository
 
         public T FindById(int id)
         {
-            T dbItem;
+            K dbItem;
             using (var context = new EntityModels.SalesDataBaseEntities())
             {
-                dbItem = context.Set<T>().Find(id);
+                dbItem = context.Set<K>().Find(id);
             }
-            return dbItem;
+            return ConvertToObject(dbItem);
         }
 
         public IEnumerable<T> GetAny(Func<T, bool> predicate)
