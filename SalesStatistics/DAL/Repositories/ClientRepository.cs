@@ -26,5 +26,17 @@ namespace DAL.Repositories
         {
             return Mapper.Map<EntityModels.Client, Client>(item);
         }
+
+        public override void Remove(Client item)
+        {
+            var client = ConvertToEntity(item);
+
+            using (var context = new EntityModels.SalesDataBaseEntities())
+            {
+                context.Sales.RemoveRange(client.Sales);
+                context.SaveChanges();
+            }
+            base.Remove(item);
+        }
     }
 }

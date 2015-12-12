@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Managers";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+@model IEnumerable<SalesStatistics.Models.Sale>
+@using GridMvc.Html
+
+<h2>Sales</h2>
+
+
+<div id="btn-group" class="btn-group">
+    <button type="button" class="btn btn-default" id="addSaleForm">
+        <span class="glyphicon glyphicon-plus"></span> Add sale
+    </button>
+</div>
+
+<hr />
+
+<div id="grid">
+    @Html.Partial("SalesGrid", Model)
+</div>
+
+<div id="divAddSale">
+</div>
+
+<div id="divEditSale">
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#addSaleForm").click(function () {
+            $("#divAddSale").show();
+            $("#btn-group").hide();
+            $("#grid").hide();
+            $.ajax({
+                url: '@Url.Action("AddSale")',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) { AddSale(result); }
+            });
+        });
+        
+        function AddSale(result) {
+            $('#divAddSale').html(result);
+        }
+    });
+</script>

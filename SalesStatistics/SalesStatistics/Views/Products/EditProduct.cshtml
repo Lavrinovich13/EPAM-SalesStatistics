@@ -1,20 +1,16 @@
-﻿@model SalesStatistics.Models.Client
-<br />
+﻿@model SalesStatistics.Models.Product
+<br/>
 <div class="panel panel-default">
-    <div class="panel-heading">Edit client</div>
+    <div class="panel-heading">Edit product</div>
     <div class="panel-body">
-        @using (Html.BeginForm("EditClient", "Clients"))
+        @using (Html.BeginForm("EditProduct", "Products"))
         {
             <div class="form-group">
                 @Html.HiddenFor(model => model.Id)
             </div>
             <div class="form-group">
-                <label>First name:</label>
-                @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
-            </div>
-            <div class="form-group">
-                <label>Last name:</label>
-                @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                <label>Product:</label>
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
             </div>
             <input class="btn btn-default" type="submit" value="Edit">
         }
@@ -25,7 +21,7 @@
 
 <script>
     $("#cancel").click(function () {
-        $("#divEditClient").hide();
+        $("#divEditProduct").hide();
         $("#btn-group").show();
         $("#grid").show();
     });

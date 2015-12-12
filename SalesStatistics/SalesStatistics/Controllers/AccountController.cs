@@ -59,6 +59,14 @@ namespace SalesStatistics.Controllers
             private set { _signInManager = value; }
         }
 
+        private IAuthenticationManager AuthenticationManager
+        {
+            get
+            {
+                return HttpContext.GetOwinContext().Authentication;
+            }
+        }
+
         //
         // POST: /Account/Login
         [HttpPost]
@@ -72,9 +80,16 @@ namespace SalesStatistics.Controllers
             }
 
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+           
             if (result == SignInStatus.Success)
             {
-                return RedirectToAction("Index", "Managers");
+                var user = await UserManager.FindAsync(model.Email, model.Password);
+
+                if (UserManager.IsInRole(user.Id, "Admin"))
+                {
+                    return RedirectToAction("Index", "Managers");
+                }
+                return RedirectToAction("Index", "Home");
             }
             ModelState.AddModelError("", "Неправильный логин или пароль");
             return View(model);
@@ -109,12 +124,12 @@ namespace SalesStatistics.Controllers
             return View(model);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Authorize]
-        public ActionResult LogOut()
+        public ActionResult LogOff()
         {
-            _signInManager.AuthenticationManager.SignOut();
-            return RedirectToAction("Login", "Account");
+            AuthenticationManager.SignOut();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

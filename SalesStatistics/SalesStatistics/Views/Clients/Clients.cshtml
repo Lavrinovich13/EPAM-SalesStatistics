@@ -8,14 +8,9 @@
 
 <h2>Clients</h2>
 
-
 <div id="btn-group" class="btn-group">
     <button type="button" class="btn btn-default" id="addClientForm">
         <span class="glyphicon glyphicon-plus"></span> Add client
-    </button>
-
-    <button type="button" class="btn btn-default" id="refresh">
-        <span class="glyphicon glyphicon-refresh"></span> Refresh
     </button>
 </div>
 
@@ -35,18 +30,6 @@
 <script type="text/javascript">
 
     $(function () {
-        $("#refresh").click(function () {
-            console.log("smth happend");
-            $.ajax({
-                url: '@Url.Action("Clients")',
-                type: 'GET',
-                dataType: 'html',
-                success: function (result) { FillGrid(result); }
-            });
-        });
-        function FillGrid(result) {
-            $('#grid').html(result);
-        }
 
         $("#addClientForm").click(function () {
             $("#divAddClient").show();

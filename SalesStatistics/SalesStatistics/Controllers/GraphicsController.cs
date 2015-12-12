@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,9 +7,9 @@ using System.Web.Mvc;
 
 namespace SalesStatistics.Controllers
 {
-    public class HomeController : Controller
+    public class GraphicsController : Controller
     {
-        [AllowAnonymous]
+        // GET: Graphics
         public ActionResult Index()
         {
             return View();

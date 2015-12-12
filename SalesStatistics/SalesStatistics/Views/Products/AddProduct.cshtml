@@ -1,0 +1,29 @@
+﻿@model SalesStatistics.Models.Product
+<div class="panel panel-default">
+    <div class="panel-heading">Add product</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("AddProduct", "Products"))
+        {
+            <div class="form-group">
+                <label>Product:</label>
+                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+            </div>
+            <input class="btn btn-default" type="submit" value="Add">
+        }
+        <br />
+        <button class="btn btn-default" id="cancel">Cancel</button>
+    </div>
+</div>
+
+<script>
+
+
+
+    $("#cancel").click(function () {
+        $("#divAddProduct").hide();
+        $("#btn-group").show();
+        $("#grid").show();
+    });
+</script>
+
+

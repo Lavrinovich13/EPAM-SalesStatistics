@@ -2,20 +2,35 @@
 @using GridMvc.Sorting
 @model IEnumerable<SalesStatistics.Models.Manager>
 
-<div id="t1">
-    @Html.Grid(Model).Named("grid").Columns(columns =>
+@Html.Grid(Model).Named("grid").Columns(columns =>
     {
-        columns.Add(c => c.LastName).Titled("Manager").Filterable(true);
+        columns.Add(c => c.LastName).Titled("Last name").Filterable(true);
         columns.Add()
                       .Encoded(false)
                       .Sanitized(false)
-                      .SetWidth(30)
-                      .RenderValueAs(o => Ajax.ActionLink("Edit", "EditManager", new { id = o.Id }, new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "t1"  }).ToHtmlString());
-        columns.Add()
-        .Encoded(false)
-        .Sanitized(false)
-        .SetWidth(30)
-        .RenderValueAs(o => Html.ActionLink("Remove", "RemoveManager", new { id = o.Id }));
-    }).Sortable(true).WithPaging(10)
-</div>
+                      .SetWidth(100)
+                      .Titled("Actions")
+                      .Sortable(false)
+                      .RenderValueAs(o => CustomRenderingOfColumn(o));
 
+    }).Sortable(true).WithPaging(10)
+
+@helper CustomRenderingOfColumn(SalesStatistics.Models.Manager order)
+{
+    <a href="#" type="button" onclick="edit(@order.Id)">Edit</a>
+    @Html.ActionLink("Remove", "RemoveManager", "Managers", new { id = order.Id }, null)
+}
+
+<script type="text/javascript">
+
+    function edit(id) {
+        var url = "/Managers/EditManager";
+        $.get(url, {id:id}, function (data) {
+            $("#divEditManager").html(data);
+            $("#divEditManager").show();
+            $("#divAddManager").hide();
+            $("#btn-group").hide();
+            $("#grid").hide();
+        });
+    }
+</script>

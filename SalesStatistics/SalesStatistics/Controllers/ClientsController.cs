@@ -67,7 +67,7 @@ namespace SalesStatistics.Controllers
         public ActionResult EditClient(int id)
         {
             var client = _clientsHandler.FindInDb(id);
-            return View(Mapper.Map<BL.Models.Client, Client>(client));
+            return PartialView(Mapper.Map<BL.Models.Client, Client>(client));
         }
 
         [HttpPost]
@@ -84,10 +84,11 @@ namespace SalesStatistics.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public void RemoveClient(int id)
+        public ActionResult RemoveClient(int id)
         {
             var client = _clientsHandler.FindInDb(id);
             _clientsHandler.RemoveFromDb(client);
+            return RedirectToAction("Index");
         }
     }
 }

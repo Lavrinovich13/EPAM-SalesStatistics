@@ -10,8 +10,12 @@ namespace SalesStatistics.Models
     {
         public int Id { get; set; }
 
-        [Required]
         [DataType(DataType.Text)]
         public string LastName { get; set; }
+
+        public override string ToString()
+        {
+            return String.Format("{0}", LastName);
+        }
     }
 }

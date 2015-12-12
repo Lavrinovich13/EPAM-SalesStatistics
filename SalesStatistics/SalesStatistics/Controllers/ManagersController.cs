@@ -67,7 +67,7 @@ namespace SalesStatistics.Controllers
         public ActionResult EditManager(int id)
         {
             var manager = _managersHandler.FindInDb(id);
-            return View(Mapper.Map<BL.Models.Manager, Manager>(manager));
+            return PartialView(Mapper.Map<BL.Models.Manager, Manager>(manager));
         }
 
         [HttpPost]
@@ -84,10 +84,11 @@ namespace SalesStatistics.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public void RemoveManager(int id)
+        public ActionResult RemoveManager(int id)
         {
             var manager = _managersHandler.FindInDb(id);
             _managersHandler.RemoveFromDb(manager);
+            return RedirectToAction("Index");
         }
     }
 }
