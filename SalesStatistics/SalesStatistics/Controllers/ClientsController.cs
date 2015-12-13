@@ -55,8 +55,19 @@ namespace SalesStatistics.Controllers
         {
             if (ModelState.IsValid)
             {
-                _clientsHandler.AddToDb(Mapper.Map<Client, BL.Models.Client>(client));
+                try
+                {
+                    _clientsHandler.AddToDb(Mapper.Map<Client, BL.Models.Client>(client));
+                }
+                catch(Exception ex)
+                {
+                    return View("Error");
+                }
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid model.");
             }
             return View(client);
         }
@@ -77,6 +88,10 @@ namespace SalesStatistics.Controllers
             {
                 _clientsHandler.UpdateInDb(Mapper.Map<Client, BL.Models.Client>(client));
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid model.");
             }
             return View(client);
         }

@@ -63,9 +63,7 @@ namespace SalesStatistics.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddUser()
         {
-            ViewBag.Roles =
-                _roleManager.Roles.Select(x => new SelectListItem() { Value = x.Name, Text = x.Name }).ToList();
-            return PartialView();
+            return RedirectToAction("Register", "Account");
         }
 
         [HttpPost]

@@ -299,7 +299,6 @@
     <Content Include="Views\Users\AddUser.cshtml" />
     <Content Include="Views\Users\Users.cshtml" />
     <Content Include="Views\Users\UsersGrid.cshtml" />
-    <Content Include="Views\Users\EditUser.cshtml" />
     <Content Include="Views\Graphics\Graphics.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -4,9 +4,11 @@
     <div class="panel-body">
         @using (Html.BeginForm("AddManager", "Managers"))
         {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <label>Manager:</label>
                 @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
             <input class="btn btn-default" id="addManager" type="submit" value="Add">
         }
@@ -14,7 +16,7 @@
         <button class="btn btn-default" id="cancel">Cancel</button>
     </div>
 </div>
-
+@Scripts.Render("~/bundles/jqueryval")
 <script>
     $("#cancel").click(function () {
         $("#divAddManager").hide();

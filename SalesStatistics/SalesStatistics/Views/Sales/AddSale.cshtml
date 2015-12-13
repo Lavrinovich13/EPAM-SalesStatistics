@@ -4,25 +4,31 @@
     <div class="panel-body">
         @using (Html.BeginForm("AddSale", "Sales"))
         {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <label>Date:</label>
                 @Html.TextBoxFor(model => model.Date, new { @class = "form-control", type = "date"})
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label>Manager:</label>
                 @Html.DropDownListFor(model => model.Manager.Id, (IEnumerable<SelectListItem>)ViewBag.Managers, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Manager, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label>Product:</label>
                 @Html.DropDownListFor(model => model.Product.Id, (IEnumerable<SelectListItem>)ViewBag.Products, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label>Client:</label>
                 @Html.DropDownListFor(model => model.Client.Id, (IEnumerable<SelectListItem>)ViewBag.Clients, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Client, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label>Sum:</label>
                 @Html.TextBoxFor(model => model.Sum, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Sum, "", new { @class = "text-danger" })
             </div>
             <input class="btn btn-default" type="submit" value="Add">
         }
@@ -30,6 +36,7 @@
         <button class="btn btn-default" id="cancel">Cancel</button>
     </div>
 </div>
+@Scripts.Render("~/bundles/jqueryval")
 <script>
     $(function () {
         $("#cancel").click(function () {

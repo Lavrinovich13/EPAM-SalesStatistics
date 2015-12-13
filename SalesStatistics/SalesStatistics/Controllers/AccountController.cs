@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SalesStatistics.Models;
 using System.Collections.Generic;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SalesStatistics.Controllers
 {
@@ -17,6 +18,9 @@ namespace SalesStatistics.Controllers
     public class AccountController : Controller
     {
         private ApplicationUserManager _userManager;
+
+        protected RoleManager<IdentityRole> _roleManager =
+            new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(new ApplicationDbContext()));
 
         public AccountController()
         {
@@ -77,13 +81,14 @@ namespace SalesStatistics.Controllers
         {
             if (!ModelState.IsValid)
             {
+                ModelState.AddModelError("", "Model is not valid.");
                 return View(model);
             }
 
             var users = new List<ApplicationUser>(UserManager.Users);
 
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-           
+
             if (result == SignInStatus.Success)
             {
                 var user = await UserManager.FindAsync(model.Email, model.Password);
@@ -96,7 +101,7 @@ namespace SalesStatistics.Controllers
             }
 
             var t = await UserManager.FindAsync(model.Email, model.Password);
-            ModelState.AddModelError("", "Неправильный логин или пароль");
+            ModelState.AddModelError("", "Invalid login or password");
             return View(model);
         }
 
@@ -105,7 +110,8 @@ namespace SalesStatistics.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return PartialView();
+            ViewBag.Roles = _roleManager.Roles.Select(x => new SelectListItem() { Text = x.Name, Value = x.Name }).ToList();
+            return View();
         }
 
         //
@@ -121,10 +127,19 @@ namespace SalesStatistics.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
-                    UserManager.AddToRole(user.Id, "User");
+                    UserManager.AddToRole(user.Id, model.Role == null ? "User" : model.Role);
+                    if(User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Index", "Users");
+                    }
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                     return RedirectToAction("Index", "Home");
                 }
+                ModelState.AddModelError("", "User with the same name already exists.");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Model is not valid.");
             }
             return View(model);
         }

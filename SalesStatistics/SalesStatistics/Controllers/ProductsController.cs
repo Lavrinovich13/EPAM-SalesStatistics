@@ -57,6 +57,10 @@ namespace SalesStatistics.Controllers
                 _productsHandler.AddToDb(Mapper.Map<Product, BL.Models.Product>(product));
                 return RedirectToAction("Index");
             }
+            else
+            {
+                ModelState.AddModelError("", "Invalid model.");
+            }
             return View(product);
         }
 
@@ -76,6 +80,10 @@ namespace SalesStatistics.Controllers
             {
                 _productsHandler.UpdateInDb(Mapper.Map<Product, BL.Models.Product>(product));
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid model.");
             }
             return View(product);
         }

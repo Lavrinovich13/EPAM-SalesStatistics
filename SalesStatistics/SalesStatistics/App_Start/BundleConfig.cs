@@ -26,6 +26,11 @@ namespace SalesStatistics
                       "~/Scripts/gridmvc.min.js",
                       "~/Scripts/bootstrap-datepicker.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/highcharts").Include(
+                      "~/Scripts/Highcharts-4.0.1/js/highcharts.js",
+                      "~/Scripts/Highcharts-4.0.1/js/highcharts-3d.js",
+                      "~/Scripts/Highcharts-4.0.1/js/modules/exporting.js"));
+
             bundles.Add(new StyleBundle("~/Content/gridCss").Include(
                       "~/Content/Gridmvc.css",
                       "~/Content/gridmvc.datepicker.css",

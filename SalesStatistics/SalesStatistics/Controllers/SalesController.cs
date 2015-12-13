@@ -73,10 +73,19 @@ namespace SalesStatistics.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddSale(Sale sale)
         {
+            ModelState.Remove("Client.FirstName");
+            ModelState.Remove("Client.LastName");
+            ModelState.Remove("Product.Name");
+            ModelState.Remove("Manager.LastName");
+
             if (ModelState.IsValid)
             {
                 _salesHandler.AddToDb(Mapper.Map<Sale, BL.Models.Sale>(sale));
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid model.");
             }
             return View(sale);
         }
@@ -103,10 +112,19 @@ namespace SalesStatistics.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult EditSale(Sale sale)
         {
+            ModelState.Remove("Client.FirstName");
+            ModelState.Remove("Client.LastName");
+            ModelState.Remove("Product.Name");
+            ModelState.Remove("Manager.LastName");
+
             if (ModelState.IsValid)
             {
                 _salesHandler.UpdateInDb(Mapper.Map<Sale, BL.Models.Sale>(sale));
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Invalid model.");
             }
             return View(sale);
         }

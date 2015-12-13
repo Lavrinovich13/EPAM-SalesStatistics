@@ -10,7 +10,8 @@ namespace SalesStatistics.Models
     {
         public int Id { get; set; }
 
-        [DataType(DataType.Text)]
+        [Required(ErrorMessage = "Last name is required.")]
+        [DataType(DataType.Text, ErrorMessage = "It is a text field.")]
         public string LastName { get; set; }
 
         public override string ToString()

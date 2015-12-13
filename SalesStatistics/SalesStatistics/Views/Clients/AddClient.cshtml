@@ -4,13 +4,16 @@
     <div class="panel-body">
         @using (Html.BeginForm("AddClient", "Clients"))
         {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 <label>First name:</label>
                 @Html.TextBoxFor(model => model.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
             <div class="form-group">
                 <label>Last name:</label>
                 @Html.TextBoxFor(model => model.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
             <input class="btn btn-default" id="addClient" type="submit" value="Add">
         }
@@ -18,7 +21,7 @@
         <button class="btn btn-default" id="cancel">Cancel</button>
     </div>
 </div>
-
+@Scripts.Render("~/bundles/jqueryval")
 <script>
     $("#cancel").click(function () {
         $("#divAddClient").hide();
