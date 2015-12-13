@@ -6,60 +6,39 @@
 @model IEnumerable<SalesStatistics.Models.Manager>
 @using GridMvc.Html
 
-<h2>Managers</h2>
-
-@if (User.IsInRole("Admin"))
-{
-    <div id="btn-group" class="btn-group">
-        <button type="button" class="btn btn-default" id="addManagerForm">
-            <span class="glyphicon glyphicon-plus"></span> Add manager
-        </button>
-    </div>
-}
-<hr />
-
 <div id="grid">
+    <h2>Managers</h2>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <div id="btn-group" class="btn-group">
+            <button type="button" class="btn btn-default" id="addForm">
+                <span class="glyphicon glyphicon-plus"></span> Add manager
+            </button>
+        </div>
+    }
+    <hr />
     @Html.Partial("ManagersGrid", Model)
 </div>
 
-<div id="divAddManager">
+<div id="divAdd">
 </div>
 
-<div id="divEditManager">
+<div id="divEdit">
 </div>
 
 
 <script type="text/javascript">
-
     $(function () {
-        $("#refresh").click(function () {
-            console.log("smth happend");
-            $.ajax({
-                url: '@Url.Action("Managers")',
-                type: 'GET',
-                dataType: 'html',
-                success: function (result) { FillGrid(result); }
-            });
-        });
-        function FillGrid(result) {
-            $('#grid').html(result);
-        }
-
-        $("#addManagerForm").click(function () {
-            $("#divAddManager").show();
-            $("#btn-group").hide();
+        $("#addForm").click(function () {
+            $("#divAdd").show();
             $("#grid").hide();
-            console.log("smth happend");
             $.ajax({
                 url: '@Url.Action("AddManager")',
                 type: 'GET',
                 dataType: 'html',
-                success: function (result) { AddManager(result); }
+                success: function (result) { $('#divAdd').html(result); }
             });
         });
-
-        function AddManager(result) {
-            $('#divAddManager').html(result);
-        }
     });
 </script>

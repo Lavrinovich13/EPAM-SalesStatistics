@@ -38,12 +38,9 @@
 </div>
 @Scripts.Render("~/bundles/jqueryval")
 <script>
-    $(function () {
-        $("#cancel").click(function () {
-            $("#divAddSale").hide();
-            $("#btn-group").show();
-            $("#grid").show();
-        });
+    $("#cancel").click(function () {
+        $("#divAdd").hide();
+        $("#grid").show();
     });
 </script>
 

@@ -57,6 +57,11 @@ namespace SalesStatistics.Controllers
             {
                 try
                 {
+                    if (_clientsHandler.IsExists(Mapper.Map<Client, BL.Models.Client>(client)))
+                    {
+                        ModelState.AddModelError("", "This client already exists.");
+                        return View(client);
+                    }
                     _clientsHandler.AddToDb(Mapper.Map<Client, BL.Models.Client>(client));
                 }
                 catch(Exception ex)
@@ -86,6 +91,11 @@ namespace SalesStatistics.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_clientsHandler.IsExists(Mapper.Map<Client, BL.Models.Client>(client)))
+                {
+                    ModelState.AddModelError("", "This client already exists.");
+                    return View(client);
+                }
                 _clientsHandler.UpdateInDb(Mapper.Map<Client, BL.Models.Client>(client));
                 return RedirectToAction("Index");
             }

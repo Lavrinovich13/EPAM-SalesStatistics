@@ -54,6 +54,11 @@ namespace SalesStatistics.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_managersHandler.IsExists(Mapper.Map<Manager, BL.Models.Manager>(manager)))
+                {
+                    ModelState.AddModelError("", "This manager already exists.");
+                    return View(manager);
+                }
                 _managersHandler.AddToDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
                 return RedirectToAction("Index");
             }
@@ -78,6 +83,11 @@ namespace SalesStatistics.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (_managersHandler.IsExists(Mapper.Map<Manager, BL.Models.Manager>(manager)))
+                {
+                    ModelState.AddModelError("", "This manager already exists.");
+                    return View(manager);
+                }   
                 _managersHandler.UpdateInDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
                 return RedirectToAction("Index");
             }

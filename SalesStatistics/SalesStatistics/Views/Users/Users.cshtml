@@ -6,46 +6,38 @@
 @model IEnumerable<SalesStatistics.Models.User>
 @using GridMvc.Html
 
-<h2>Users</h2>
-
-<div id="btn-group" class="btn-group">
-    <button type="button" class="btn btn-default" id="addUserForm">
-        <span class="glyphicon glyphicon-plus"></span> Add user
-    </button>
-</div>
-
-<hr />
-
 <div id="grid">
+    <h2>Users</h2>
+
+    <div id="btn-group" class="btn-group">
+        <button type="button" class="btn btn-default" id="addForm">
+            <span class="glyphicon glyphicon-plus"></span> Add user
+        </button>
+    </div>
+
+    <hr />
     @Html.Partial("UsersGrid", Model)
 </div>
 
-<div id="divAddUser">
+<div id="divAdd">
 </div>
 
-<div id="divEditUser">
+<div id="divEdit">
 </div>
 
 
 <script type="text/javascript">
 
     $(function () {
-
-        $("#addUserForm").click(function () {
-            $("#divAddUser").show();
-            $("#btn-group").hide();
+        $("#addForm").click(function () {
+            $("#divAdd").show();
             $("#grid").hide();
-            console.log("smth happend");
             $.ajax({
                 url: '@Url.Action("AddUser")',
                 type: 'GET',
                 dataType: 'html',
-                success: function (result) { AddUser(result); }
+                success: function (result) { $('#divAdd').html(result); }
             });
         });
-        
-        function AddUser(result) {
-            $('#divAddUser').html(result);
-        }
     });
 </script>

@@ -46,11 +46,9 @@ namespace BL.Handlers
                 .Select(x => ConvertToBlModel(x)));
         }
 
-        public IList<T> GetAny(Func<T, bool> predicate)
+        public bool IsExists(T item)
         {
-            return new List<T>(_repository
-                .GetAny(x => predicate(ConvertToBlModel(x)))
-                .Select(x => ConvertToBlModel(x)));
+            return _repository.IsExists(ConvertToDalModel(item));
         }
     }
 }

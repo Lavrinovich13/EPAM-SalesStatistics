@@ -5,12 +5,12 @@ namespace SalesStatistics.Models
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Field Email is required.")]
         [Display(Name = "Email")]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "It is not Email.")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field Password is required.")]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
@@ -21,22 +21,23 @@ namespace SalesStatistics.Models
 
     public class RegisterViewModel
     {
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Field Email is required.")]
+        [EmailAddress(ErrorMessage = "It is not Email.")]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Field UserName is required.")]
         [Display(Name = "User name")]
         public string UserName { get; set; }
 
-         [Display(Name = "Role")]
+        [Display(Name = "Role")]
         public string Role { get; set; }
 
-        [Required]
-        [StringLength(100, ErrorMessage = "Not less {1} symbols.", MinimumLength = 6)]
+        [Required(ErrorMessage = "Field Password is required.")]
+        [StringLength(18, ErrorMessage = "Not less {2} symbols and not more {1}.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
+        [RegularExpression("[a-z0-9_]+", ErrorMessage = "Password can inclide only a-z, 0-9 and _.")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]

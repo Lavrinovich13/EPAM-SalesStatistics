@@ -2,30 +2,22 @@
 @using GridMvc.Sorting
 @model IEnumerable<SalesStatistics.Models.Client>
 
-@if (User.IsInRole("Admin"))
-{
+
     @Html.Grid(Model).Named("grid").Columns(columns =>
     {
         columns.Add(c => c.FirstName).Titled("First name").Filterable(true);
         columns.Add(c => c.LastName).Titled("Last name").Filterable(true);
-        columns.Add()
-                      .Titled("Actions")
-                      .Encoded(false)
-                      .Sanitized(false)
-                      .SetWidth(100)
-                     .RenderValueAs(o => CustomRenderingOfColumn(o));
+        if (User.IsInRole("Admin"))
+        {
+            columns.Add()
+                          .Titled("Actions")
+                          .Encoded(false)
+                          .Sanitized(false)
+                          .SetWidth(100)
+                         .RenderValueAs(o => CustomRenderingOfColumn(o));
+        }
 
-    }).Sortable(true).WithPaging(10)
-}
-else
-{
-    @Html.Grid(Model).Named("grid").Columns(columns =>
-    {
-        columns.Add(c => c.FirstName).Titled("First name").Filterable(true);
-        columns.Add(c => c.LastName).Titled("Last name").Filterable(true);
-
-    }).Sortable(true).WithPaging(10)
-}
+    }).Sortable(true).WithPaging(8)
 
 @helper CustomRenderingOfColumn(SalesStatistics.Models.Client order)
 {
@@ -38,10 +30,9 @@ else
     function edit(id) {
         var url = "/Clients/EditClient";
         $.get(url, {id:id}, function (data) {
-            $("#divEditClient").html(data);
-            $("#divEditClient").show();
-            $("#divAddClient").hide();
-            $("#btn-group").hide();
+            $("#divEdit").html(data);
+            $("#divEdit").show();
+            $("#divAdd").hide();
             $("#grid").hide();
         });
     }

@@ -14,6 +14,6 @@ namespace DAL.Interfaces
         void Remove(T item);
         T FindById(int id);
         IEnumerable<T> GetAll();
-        IEnumerable<T> GetAny(Func<T, bool> predicate);
+        bool IsExists(T item);
     }
 }

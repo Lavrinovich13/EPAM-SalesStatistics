@@ -7,11 +7,12 @@
 
 @Scripts.Render("~/bundles/highcharts")
 
+<h2 id="loader">Loading...</h2>
+
 <div id="container1" style="height: 400px"></div>
 <br/>
 <br/>
 <div id="container2" style="height: 400px"></div>
-
 <script type="text/javascript">
 
     $(document).ready(function () {
@@ -23,7 +24,6 @@
             dataType: "json",
             success: function (Result) {
                 DreawProductsChart(Result);
-                console.log(Result);
             },
             error: function (Result) {
                 alert("Error");
@@ -38,13 +38,12 @@
             dataType: "json",
             success: function (Result) {
                 DreawManagersChart(Result);
-                console.log(Result);
+                $("#loader").hide();
             },
             error: function (Result) {
                 alert("Error");
             }
         });
-       
     });
 
     function DreawManagersChart(data) {

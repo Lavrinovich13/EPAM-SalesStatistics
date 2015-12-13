@@ -80,6 +80,11 @@ namespace SalesStatistics.Controllers
 
             if (ModelState.IsValid)
             {
+                if (_salesHandler.IsExists(Mapper.Map<Sale, BL.Models.Sale>(sale)))
+                {
+                    ModelState.AddModelError("", "This sale already exists.");
+                    return View(sale);
+                }
                 _salesHandler.AddToDb(Mapper.Map<Sale, BL.Models.Sale>(sale));
                 return RedirectToAction("Index");
             }
@@ -119,6 +124,11 @@ namespace SalesStatistics.Controllers
 
             if (ModelState.IsValid)
             {
+                if (_salesHandler.IsExists(Mapper.Map<Sale, BL.Models.Sale>(sale)))
+                {
+                    ModelState.AddModelError("", "This sale already exists.");
+                    return View(sale);
+                }
                 _salesHandler.UpdateInDb(Mapper.Map<Sale, BL.Models.Sale>(sale));
                 return RedirectToAction("Index");
             }

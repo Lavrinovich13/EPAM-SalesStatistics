@@ -2,27 +2,20 @@
 @using GridMvc.Sorting
 @model IEnumerable<SalesStatistics.Models.Product>
 
-@if (User.IsInRole("Admin"))
-{
-    @Html.Grid(Model).Named("grid").Columns(columns =>
+@Html.Grid(Model).Named("grid").Columns(columns =>
     {
         columns.Add(c => c.Name).Titled("Name").Filterable(true);
-        columns.Add()
-                       .Encoded(false)
-                       .Sanitized(false)
-                       .SetWidth(100)
-                       .Titled("Actions")
-                       .Sortable(false)
-                       .RenderValueAs(o => CustomRenderingOfColumn(o));
-    }).Sortable(true).WithPaging(10)
-}
-else
-{
-    @Html.Grid(Model).Named("grid").Columns(columns =>
-    {
-        columns.Add(c => c.Name).Titled("Name").Filterable(true);
-    }).Sortable(true).WithPaging(10)
-}
+        if (User.IsInRole("Admin"))
+        {
+            columns.Add()
+                           .Encoded(false)
+                           .Sanitized(false)
+                           .SetWidth(100)
+                           .Titled("Actions")
+                           .Sortable(false)
+                           .RenderValueAs(o => CustomRenderingOfColumn(o));
+        }
+    }).Sortable(true).WithPaging(8)
 
 @helper CustomRenderingOfColumn(SalesStatistics.Models.Product order)
 {
@@ -31,14 +24,12 @@ else
 }
 
 <script type="text/javascript">
-
     function edit(id) {
         var url = "/Products/EditProduct";
         $.get(url, {id:id}, function (data) {
-            $("#divEditProduct").html(data);
-            $("#divEditProduct").show();
-            $("#divAddProduct").hide();
-            $("#btn-group").hide();
+            $("#divEdit").html(data);
+            $("#divEdit").show();
+            $("#divAdd").hide();
             $("#grid").hide();
         });
     }

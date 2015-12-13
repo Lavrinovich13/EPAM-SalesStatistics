@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DAL.AbstractRepository
 {
     public abstract class DataRepository<T, K> : IDataRepository<T>
-        where T : class
+        where T : class, IEquatable<T>
         where K : class
     {
         protected abstract K ConvertToEntity(T item);
@@ -52,21 +52,6 @@ namespace DAL.AbstractRepository
             return item;
         }
 
-        public IEnumerable<T> GetAny(Func<T, bool> predicate)
-        {
-            IEnumerable<T> list;
-            using (var context = new EntityModels.SalesDataBaseEntities())
-            {
-                list = context
-                    .Set<K>()
-                    .AsNoTracking()
-                    .Select(x => ConvertToObject(x))
-                    .Where(predicate)
-                    .ToList();
-            }
-            return list ?? new List<T>();
-        }
-
         public virtual IEnumerable<T> GetAll()
         {
             IEnumerable<T> list;
@@ -80,6 +65,21 @@ namespace DAL.AbstractRepository
                     .ToList();
             }
             return list ?? new List<T>();
+        }
+
+        public virtual bool IsExists(T item)
+        {
+            T dbItem;
+            using (var context = new EntityModels.SalesDataBaseEntities())
+            {
+                var entityItem = context
+                    .Set<K>()
+                    .ToList()
+                    .Select(x => ConvertToObject(x))
+                    .FirstOrDefault(x => x.Equals(item));
+                dbItem = entityItem;
+            }
+            return dbItem == null ? false : true;
         }
     }
 }

@@ -6,47 +6,39 @@
 @model IEnumerable<SalesStatistics.Models.Sale>
 @using GridMvc.Html
 
-<h2>Sales</h2>
-
-@if (User.IsInRole("Admin"))
-{
-    <div id="btn-group" class="btn-group">
-        <button type="button" class="btn btn-default" id="addSaleForm">
-            <span class="glyphicon glyphicon-plus"></span> Add sale
-        </button>
-    </div>
-}
-<hr />
-
 <div id="grid">
+    <h2>Sales</h2>
+    @if (User.IsInRole("Admin"))
+    {
+        <div id="btn-group" class="btn-group">
+            <button type="button" class="btn btn-default" id="addForm">
+                <span class="glyphicon glyphicon-plus"></span> Add sale
+            </button>
+        </div>
+    }
+
+    <hr />
     @Html.Partial("SalesGrid", Model)
 </div>
 
-<div id="divAddSale">
+<div id="divAdd">
 </div>
 
-<div id="divEditSale">
+<div id="divEdit">
 </div>
 
 
 <script type="text/javascript">
-
     $(function () {
-
-        $("#addSaleForm").click(function () {
-            $("#divAddSale").show();
-            $("#btn-group").hide();
+        $("#addForm").click(function () {
+            $("#divAdd").show();
             $("#grid").hide();
             $.ajax({
                 url: '@Url.Action("AddSale")',
                 type: 'GET',
                 dataType: 'html',
-                success: function (result) { AddSale(result); }
+                success: function (result) { $('#divAdd').html(result); }
             });
         });
-
-        function AddSale(result) {
-            $('#divAddSale').html(result);
-        }
     });
 </script>

@@ -14,6 +14,6 @@ namespace BL.Interfaces
         void RemoveFromDb(T item);
         T FindInDb(int id);
         IList<T> GetAll();
-        IList<T> GetAny(Func<T, bool> predicate);
+        bool IsExists(T item);
     }
 }
