@@ -9,8 +9,10 @@
 <script src="~/Scripts/Highcharts-4.0.1/js/highcharts-3d.js"></script>
 <script src="~/Scripts/Highcharts-4.0.1/js/modules/exporting.js"></script>
 
-<div id="container" style="height: 400px"></div>
-
+<div id="container1" style="height: 400px"></div>
+<br/>
+<br/>
+<div id="container2" style="height: 400px"></div>
 
 <script type="text/javascript">
 
@@ -23,11 +25,13 @@
             dataType: "json",
             success: function (Result) {
                 DreawProductsChart(Result);
+                console.log(Result);
             },
             error: function (Result) {
                 alert("Error");
             }
         });
+
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",
@@ -35,51 +39,61 @@
             data: "{}",
             dataType: "json",
             success: function (Result) {
-                DreawProductsChart(Result);
+                DreawManagersChart(Result);
+                console.log(Result);
             },
             error: function (Result) {
                 alert("Error");
             }
         });
+       
     });
-    function DreawManagersChart(data) {
 
+    function DreawManagersChart(data) {
         $(function () {
-            $('#container').highcharts({
+            $('#container1').highcharts({
                 chart: {
-                    type: 'bar'
+                    type: 'column'
                 },
                 title: {
-                    text: 'Stacked bar chart'
+                    text: 'Managers'
                 },
                 xAxis: {
-                    categories: ['Amount']
-                    
+                    type: 'category'
                 },
                 yAxis: {
-                    min: 0,
                     title: {
-                        text: 'Products'
+                        text: 'The percent of sold products'
                     }
+
                 },
                 legend: {
-                    reversed: true
+                    enabled: false
                 },
                 plotOptions: {
                     series: {
-                        stacking: 'normal'
+                        borderWidth: 0,
+                        dataLabels: {
+                            enabled: true,
+                            format: '{point.y:.1f}%'
+                        }
                     }
                 },
+
+                tooltip: {
+                    headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+                    pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.2f}%</b> of total<br/>'
+                },
+
                 series: data
             });
         });
     }
 
-
     function DreawProductsChart(data) {
 
         $(function () {
-            $('#container').highcharts({
+            $('#container2').highcharts({
                 chart: {
                     plotBackgroundColor: null,
                     plotBorderWidth: null,
@@ -87,7 +101,7 @@
                     type: 'pie'
                 },
                 title: {
-                    text: 'Amount of saled products'
+                    text: 'Sold products'
                 },
                 tooltip: {
                     pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'

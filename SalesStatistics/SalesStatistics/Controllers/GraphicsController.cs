@@ -16,6 +16,7 @@ namespace SalesStatistics.Controllers
     {
         protected IModelHandler<BL.Models.Product> _productsHandler = new ProductHandler();
         protected IModelHandler<BL.Models.Sale> _salesHandler = new SaleHandler();
+        protected IModelHandler<BL.Models.Manager> _managersHandler = new ManagerHandler();
 
         [Authorize(Roles = "User")]
         // GET: Graphics
@@ -46,7 +47,10 @@ namespace SalesStatistics.Controllers
              var products = 
                  Mapper.Map<IEnumerable<BL.Models.Product>, IEnumerable<Product>>(_productsHandler.GetAll());
 
-             var dict = new { name = "Products", colorByPoint = true, data = products.Select(x => new { name = x.Name, y = sales.Count(y => y.Product.Id == x.Id)}).ToArray() };
+             var dict = new { name = "Products", colorByPoint = true,
+                 data = products
+                 .Select(x => new { name = x.Name, y = sales.Count(y => y.Product.Id == x.Id)})
+                 .ToArray() };
 
              var array = new object[] { dict };
 
@@ -56,15 +60,20 @@ namespace SalesStatistics.Controllers
 
         [Authorize(Roles = "User")]
         [HttpPost]
-        public JsonResult GetDataForProductsGraphic()
+        public JsonResult GetDataForManagersGraphic()
         {
             var sales =
                 Mapper.Map<IEnumerable<BL.Models.Sale>, IEnumerable<Sale>>(_salesHandler.GetAll());
 
-            var products =
-                Mapper.Map<IEnumerable<BL.Models.Product>, IEnumerable<Product>>(_productsHandler.GetAll());
+            double salesNumber = (double)sales.Count() / 100;
 
-            var dict = new { name = "Products", colorByPoint = true, data = products.Select(x => new { name = x.Name, y = sales.Count(y => y.Product.Id == x.Id) }).ToArray() };
+            var managers =
+                Mapper.Map<IEnumerable<BL.Models.Manager>, IEnumerable<Manager>>(_managersHandler.GetAll());
+
+            var dict = new { name = "Managers", colorByPoint = true, 
+                data = managers
+                .Select(x => new { name = x.LastName, y = salesNumber != 0 ? (double)sales.Count(y => y.Manager.Id == x.Id) / salesNumber : 0, drilldown = x.LastName })
+                .ToArray() };
 
             var array = new object[] { dict };
 
