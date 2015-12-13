@@ -2,7 +2,9 @@
 @using GridMvc.Sorting
 @model IEnumerable<SalesStatistics.Models.Manager>
 
-@Html.Grid(Model).Named("grid").Columns(columns =>
+@if (User.IsInRole("Admin"))
+{
+    @Html.Grid(Model).Named("grid").Columns(columns =>
     {
         columns.Add(c => c.LastName).Titled("Last name").Filterable(true);
         columns.Add()
@@ -14,6 +16,15 @@
                       .RenderValueAs(o => CustomRenderingOfColumn(o));
 
     }).Sortable(true).WithPaging(10)
+}
+else
+{
+    @Html.Grid(Model).Named("grid").Columns(columns =>
+    {
+        columns.Add(c => c.LastName).Titled("Last name").Filterable(true);
+
+    }).Sortable(true).WithPaging(10)
+}
 
 @helper CustomRenderingOfColumn(SalesStatistics.Models.Manager order)
 {

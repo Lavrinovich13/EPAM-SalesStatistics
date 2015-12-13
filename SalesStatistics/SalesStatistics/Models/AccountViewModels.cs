@@ -27,6 +27,10 @@ namespace SalesStatistics.Models
         public string Email { get; set; }
 
         [Required]
+        [Display(Name = "User name")]
+        public string UserName { get; set; }
+
+        [Required]
         [StringLength(100, ErrorMessage = "Not less {1} symbols.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]

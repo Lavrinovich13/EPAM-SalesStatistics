@@ -2,11 +2,13 @@
 @using GridMvc.Sorting
 @model IEnumerable<SalesStatistics.Models.Sale>
 
-@Html.Grid(Model).Named("grid").Columns(columns =>
+@if (User.IsInRole("Admin"))
+{
+    @Html.Grid(Model).Named("grid").Columns(columns =>
     {
         columns.Add(c => c.Date).Titled("Date").Format("{0:MM/dd/yyyy}").Filterable(true);
         columns.Add(c => c.Manager.LastName).Titled("Manager").Filterable(true);
-        columns.Add(c => c.Client.LastName).Titled("Client").Filterable(true);
+        columns.Add(c => c.Client.FullName).Titled("Client").Filterable(true);
         columns.Add(c => c.Product.Name).Titled("Product").Filterable(true);
         columns.Add(c => c.Sum).Titled("Sum").Filterable(true);
         columns.Add()
@@ -16,11 +18,23 @@
                       .SetWidth(100)
                       .RenderValueAs(o => CustomRenderingOfColumn(o));
     }).Sortable(true).WithPaging(10)
+}
+else
+{
+    @Html.Grid(Model).Named("grid").Columns(columns =>
+    {
+        columns.Add(c => c.Date).Titled("Date").Format("{0:MM/dd/yyyy}").Filterable(true);
+        columns.Add(c => c.Manager.LastName).Titled("Manager").Filterable(true);
+        columns.Add(c => c.Client.FullName).Titled("Client").Filterable(true);
+        columns.Add(c => c.Product.Name).Titled("Product").Filterable(true);
+        columns.Add(c => c.Sum).Titled("Sum").Filterable(true);
+    }).Sortable(true).WithPaging(10)
+}
 
 @helper CustomRenderingOfColumn(SalesStatistics.Models.Sale order)
 {
     <a href="#" type="button" onclick="edit(@order.Id)">Edit</a>
-    @Html.ActionLink("Remove", "RemoveSale", "Sales", new { id = order.Id}, null)
+    @Html.ActionLink("Remove", "RemoveSale", "Sales", new { id = order.Id }, null)
 }
 
 <script type="text/javascript">

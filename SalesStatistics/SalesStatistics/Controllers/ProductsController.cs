@@ -15,7 +15,7 @@ namespace SalesStatistics.Controllers
         protected IModelHandler<BL.Models.Product> _productsHandler = new ProductHandler();
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public ActionResult Index()
         {
             Mapper.CreateMap<BL.Models.Product, Product>();
@@ -33,9 +33,7 @@ namespace SalesStatistics.Controllers
             return PartialView("ProductsGrid", GetProducts());
         }
 
-        [HttpGet]
-        [Authorize]
-        public IEnumerable<Product> GetProducts()
+        protected IEnumerable<Product> GetProducts()
         {
             var products = _productsHandler.GetAll();
             var vmProducts = Mapper.Map<IEnumerable<BL.Models.Product>, IEnumerable<Product>>(products);

@@ -20,6 +20,11 @@ namespace DAL.Repositories
                .ForMember(dest => dest.Client, opt => opt.Ignore())
                .ForMember(dest => dest.Product, opt => opt.Ignore())
                .ForMember(dest => dest.Manager, opt => opt.Ignore());
+
+            Mapper.CreateMap<EntityModels.Sale, Sale>();
+            Mapper.CreateMap<EntityModels.Client, Client>();
+            Mapper.CreateMap<EntityModels.Manager, Manager>();
+            Mapper.CreateMap<EntityModels.Product, Product>();
         }
 
         protected override EntityModels.Sale ConvertToEntity(Sale item)
@@ -29,28 +34,7 @@ namespace DAL.Repositories
 
         protected override Sale ConvertToObject(EntityModels.Sale item)
         {
-            return new Sale()
-                {
-                    Date = item.Date,
-                    Sum = item.Sum,
-                    Id = item.Id,
-                    Client = new Client()
-                    {
-                        Id = item.ClientId,
-                        FirstName = item.Client.FirstName,
-                        LastName = item.Client.LastName
-                    },
-                    Manager = new Manager()
-                    {
-                        Id = item.ManagerId,
-                        LastName = item.Manager.LastName
-                    },
-                    Product = new Product()
-                    {
-                        Id = item.ManagerId,
-                        Name = item.Product.Name
-                    }
-                };
+           return Mapper.Map<EntityModels.Sale, Sale>(item);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Managers";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 @model IEnumerable<SalesStatistics.Models.Product>
@@ -8,13 +8,14 @@
 
 <h2>Products</h2>
 
-
-<div id="btn-group" class="btn-group">
-    <button type="button" class="btn btn-default" id="addProductForm">
-        <span class="glyphicon glyphicon-plus"></span> Add product
-    </button>
-</div>
-
+@if (User.IsInRole("Admin"))
+{
+    <div id="btn-group" class="btn-group">
+        <button type="button" class="btn btn-default" id="addProductForm">
+            <span class="glyphicon glyphicon-plus"></span> Add product
+        </button>
+    </div>
+}
 <hr />
 
 <div id="grid">
@@ -44,7 +45,7 @@
                 success: function (result) { AddProduct(result); }
             });
         });
-        
+
         function AddProduct(result) {
             $('#divAddProduct').html(result);
         }

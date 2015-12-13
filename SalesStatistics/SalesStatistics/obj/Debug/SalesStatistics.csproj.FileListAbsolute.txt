@@ -81,3 +81,4 @@ C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\SalesStatistics\o
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\SalesStatistics\obj\Debug\SalesStatistics.dll
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\SalesStatistics\obj\Debug\SalesStatistics.pdb
 C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\SalesStatistics\bin\GridMvc.dll
+C:\Users\Ksenia\Documents\EPAM-SalesStatistics\SalesStatistics\SalesStatistics\bin\DotNet.Highcharts.dll

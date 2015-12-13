@@ -15,7 +15,7 @@ namespace SalesStatistics.Controllers
         protected IModelHandler<BL.Models.Client> _clientsHandler = new ClientHandler();
 
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public ActionResult Index()
         {
             Mapper.CreateMap<BL.Models.Client, Client>();
@@ -33,9 +33,8 @@ namespace SalesStatistics.Controllers
             return PartialView("ClientsGrid", GetClients());
         }
 
-        [HttpGet]
-        [Authorize]
-        public IEnumerable<Client> GetClients()
+        
+        protected IEnumerable<Client> GetClients()
         {
             var clients = _clientsHandler.GetAll();
             var vmClients = Mapper.Map<IEnumerable<BL.Models.Client>, IEnumerable<Client>>(clients);

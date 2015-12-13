@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SalesStatistics.Models;
+using System.Collections.Generic;
 
 namespace SalesStatistics.Controllers
 {
@@ -79,6 +80,8 @@ namespace SalesStatistics.Controllers
                 return View(model);
             }
 
+            var users = new List<ApplicationUser>(UserManager.Users);
+
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
            
             if (result == SignInStatus.Success)
@@ -91,6 +94,8 @@ namespace SalesStatistics.Controllers
                 }
                 return RedirectToAction("Index", "Home");
             }
+
+            var t = await UserManager.FindAsync(model.Email, model.Password);
             ModelState.AddModelError("", "Неправильный логин или пароль");
             return View(model);
         }
@@ -100,7 +105,7 @@ namespace SalesStatistics.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View();
+            return PartialView();
         }
 
         //

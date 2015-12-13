@@ -1,0 +1,36 @@
+﻿@model SalesStatistics.Models.User
+<br />
+<div class="panel panel-default">
+    <div class="panel-heading">Edit user</div>
+    <div class="panel-body">
+        @using (Html.BeginForm("EditUser", "Users"))
+        {
+            <div class="form-group">
+                @Html.HiddenFor(model => model.Id)
+            </div>
+            <div class="form-group">
+                <label>Email:</label>
+                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>User name:</label>
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>User name:</label>
+                @Html.DropDownListFor(model => model.Role, (IEnumerable<SelectListItem>)ViewBag.Roles, new { @class = "form-control" })
+            </div>
+            <input class="btn btn-default" type="submit" value="Edit">
+        }
+        <br />
+        <button class="btn btn-default" id="cancel">Cancel</button>
+    </div>
+</div>
+
+<script>
+    $("#cancel").click(function () {
+        $("#divEditUser").hide();
+        $("#btn-group").show();
+        $("#grid").show();
+    });
+</script>

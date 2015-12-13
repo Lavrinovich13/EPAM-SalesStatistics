@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@model IEnumerable<SalesStatistics.Models.User>
+@using GridMvc.Html
+
+<h2>Users</h2>
+
+<div id="btn-group" class="btn-group">
+    <button type="button" class="btn btn-default" id="addUserForm">
+        <span class="glyphicon glyphicon-plus"></span> Add user
+    </button>
+</div>
+
+<hr />
+
+<div id="grid">
+    @Html.Partial("UsersGrid", Model)
+</div>
+
+<div id="divAddUser">
+</div>
+
+<div id="divEditUser">
+</div>
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $("#addUserForm").click(function () {
+            $("#divAddUser").show();
+            $("#btn-group").hide();
+            $("#grid").hide();
+            console.log("smth happend");
+            $.ajax({
+                url: '@Url.Action("AddUser")',
+                type: 'GET',
+                dataType: 'html',
+                success: function (result) { AddUser(result); }
+            });
+        });
+        
+        function AddUser(result) {
+            $('#divAddUser').html(result);
+        }
+    });
+</script>

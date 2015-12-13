@@ -8,7 +8,7 @@ using System.Web;
 
 namespace SalesStatistics.Models
 {
-    public class UsersDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+    public class UsersDbInitializer : CreateDatabaseIfNotExists<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext context)
         {
@@ -22,9 +22,13 @@ namespace SalesStatistics.Models
             roleManager.Create(adminRole);
             roleManager.Create(userRole);
 
-            var admin = new ApplicationUser { Email = "admin@gmail.ru", UserName = "admin@gmail.ru" };
+            var admin = new ApplicationUser { Email = "admin@gmail.com", UserName = "admin@gmail.com" };
             string password = "123456";
             var result = userManager.Create(admin, password);
+
+            var user = new ApplicationUser { Email = "user@gmail.com", UserName = "user@gmail.com" };
+            var resultuser = userManager.Create(user, "123456");
+            userManager.AddToRole(user.Id, userRole.Name);
 
             if (result.Succeeded)
             {

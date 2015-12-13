@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Managers";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 @model IEnumerable<SalesStatistics.Models.Client>
@@ -8,12 +8,14 @@
 
 <h2>Clients</h2>
 
-<div id="btn-group" class="btn-group">
-    <button type="button" class="btn btn-default" id="addClientForm">
-        <span class="glyphicon glyphicon-plus"></span> Add client
-    </button>
-</div>
-
+@if (User.IsInRole("Admin"))
+{
+    <div id="btn-group" class="btn-group">
+        <button type="button" class="btn btn-default" id="addClientForm">
+            <span class="glyphicon glyphicon-plus"></span> Add client
+        </button>
+    </div>
+}
 <hr />
 
 <div id="grid">
@@ -43,7 +45,7 @@
                 success: function (result) { AddClient(result); }
             });
         });
-        
+
         function AddClient(result) {
             $('#divAddClient').html(result);
         }

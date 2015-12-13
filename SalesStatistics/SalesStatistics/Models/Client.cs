@@ -15,5 +15,13 @@ namespace SalesStatistics.Models
         {
             return String.Format("{0} {1}", LastName, FirstName);
         }
+
+        public string FullName
+        {
+            get
+            {
+                return ToString();
+            }
+        }
     }
 }
