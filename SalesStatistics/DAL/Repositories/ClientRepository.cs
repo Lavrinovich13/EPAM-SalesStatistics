@@ -33,7 +33,8 @@ namespace DAL.Repositories
 
             using (var context = new EntityModels.SalesDataBaseEntities())
             {
-                context.Sales.RemoveRange(client.Sales);
+                var sales = new List<EntityModels.Sale>(context.Sales.Where(x => x.ClientId == item.Id));
+                context.Sales.RemoveRange(sales);
                 context.SaveChanges();
             }
             base.Remove(item);

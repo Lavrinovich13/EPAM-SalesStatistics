@@ -20,12 +20,18 @@ namespace BL.Handlers
 
         public void AddToDb(T item)
         {
-            _repository.Add(ConvertToDalModel(item));
+            if (!IsExists(item))
+            {
+                _repository.Add(ConvertToDalModel(item));
+            }
         }
 
         public void UpdateInDb(T item)
         {
-            _repository.Update(ConvertToDalModel(item));
+            if (!IsExists(item))
+            {
+                _repository.Update(ConvertToDalModel(item));
+            }
         }
 
         public void RemoveFromDb(T item)

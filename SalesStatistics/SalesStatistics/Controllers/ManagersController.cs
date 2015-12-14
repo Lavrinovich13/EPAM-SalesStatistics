@@ -54,13 +54,15 @@ namespace SalesStatistics.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_managersHandler.IsExists(Mapper.Map<Manager, BL.Models.Manager>(manager)))
+                try
                 {
-                    ModelState.AddModelError("", "This manager already exists.");
-                    return View(manager);
+                    _managersHandler.AddToDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
+                    return RedirectToAction("Index");
                 }
-                _managersHandler.AddToDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
-                return RedirectToAction("Index");
+                catch (Exception ex)
+                {
+                    return View("Error");
+                }
             }
             else
             {
@@ -83,13 +85,15 @@ namespace SalesStatistics.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_managersHandler.IsExists(Mapper.Map<Manager, BL.Models.Manager>(manager)))
+                try
                 {
-                    ModelState.AddModelError("", "This manager already exists.");
-                    return View(manager);
-                }   
-                _managersHandler.UpdateInDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
-                return RedirectToAction("Index");
+                    _managersHandler.UpdateInDb(Mapper.Map<Manager, BL.Models.Manager>(manager));
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    return View("Error");
+                }
             }
             else
             {

@@ -1,26 +1,40 @@
 ﻿@using GridMvc.Html
 @using GridMvc.Sorting
-@model IEnumerable<SalesStatistics.Models.User>
-
+@model IEnumerable<SalesStatistics.Models.ApplicationUser>
 
 @Html.Grid(Model).Named("grid").Columns(columns =>
     {
-        columns.Add(c => c.Email).Titled("Email").Filterable(true);
-        columns.Add(c => c.UserName).Titled("User name").Filterable(true);
-        columns.Add(c => c.Role).Titled("Role").Filterable(true);
+        columns.Add(c => c.Email).Titled("Email").Filterable(true).Sortable(true);
+        columns.Add(c => c.UserName).Titled("User name").Filterable(true).Sortable(true);
+        columns.Add(c => c.Roles).Titled("Role")
+                      .Encoded(false)
+                      .Sanitized(false)
+                      .Sortable(false)
+                      .RenderValueAs(o => RolesColumn(o));
         columns.Add()
                       .Titled("Actions")
                       .Encoded(false)
                       .Sanitized(false)
                       .SetWidth(100)
-                     .RenderValueAs(o => CustomRenderingOfColumn(o));
+                      .Sortable(false)
+                     .RenderValueAs(o => ActionsColumn(o));
 
-    }).Sortable(true).WithPaging(8)
+    }).WithPaging(8)
 
-@helper CustomRenderingOfColumn(SalesStatistics.Models.User order)
+@helper ActionsColumn(SalesStatistics.Models.ApplicationUser user)
 {
-    if (order.Email != "admin@gmail.com")
+    if (user.Email != "admin@gmail.com")
     {
-        @Html.ActionLink("Remove", "RemoveUser", "Users", new { id = order.Id }, null)
+        @Html.ActionLink("Remove", "RemoveUser", "Users", new { id = user.Id }, null)
+    }
+}
+
+@helper RolesColumn(SalesStatistics.Models.ApplicationUser user)
+{
+    var roles = (List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>)ViewBag.Roles;
+    foreach(var role in user.Roles)
+    {
+        var name = roles.FirstOrDefault(x => x.Id == role.RoleId).Name;
+        @Html.Label("", name)
     }
 }

@@ -13,14 +13,14 @@
                            .SetWidth(100)
                            .Titled("Actions")
                            .Sortable(false)
-                           .RenderValueAs(o => CustomRenderingOfColumn(o));
+                           .RenderValueAs(o => ActionsColumn(o));
         }
     }).Sortable(true).WithPaging(8)
 
-@helper CustomRenderingOfColumn(SalesStatistics.Models.Product order)
+@helper ActionsColumn(SalesStatistics.Models.Product item)
 {
-    <a href="#" type="button" onclick="edit(@order.Id)">Edit</a>
-    @Html.ActionLink("Remove", "RemoveProduct", "Products", new { id = order.Id }, null)
+    <a href="#" type="button" onclick="edit(@item.Id)">Edit</a>
+    @Html.ActionLink("Remove", "RemoveProduct", "Products", new { id = item.Id }, null)
 }
 
 <script type="text/javascript">

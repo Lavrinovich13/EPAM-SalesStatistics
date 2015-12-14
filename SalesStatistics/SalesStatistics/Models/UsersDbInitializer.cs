@@ -26,10 +26,6 @@ namespace SalesStatistics.Models
             string password = "123456";
             var result = userManager.Create(admin, password);
 
-            var user = new ApplicationUser { Email = "user@gmail.com", UserName = "user@gmail.com" };
-            var resultuser = userManager.Create(user, "123456");
-            userManager.AddToRole(user.Id, userRole.Name);
-
             if (result.Succeeded)
             {
                 userManager.AddToRole(admin.Id, adminRole.Name);
