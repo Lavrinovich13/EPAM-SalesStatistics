@@ -37,13 +37,6 @@ namespace SalesStatistics.Controllers
             return View("Sales", GetSales());
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Sales()
-        {
-            return PartialView("SalesGrid", GetSales());
-        }
-
         protected IEnumerable<Sale> GetSales()
         {
             var sales = _salesHandler.GetAll();

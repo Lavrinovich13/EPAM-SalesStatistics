@@ -24,15 +24,6 @@ namespace SalesStatistics.Controllers
             return View("Managers", GetManagers());
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Managers()
-        {
-            Mapper.CreateMap<BL.Models.Manager, Manager>();
-
-            return PartialView("ManagersGrid", GetManagers());
-        }
-
         protected IEnumerable<Manager> GetManagers()
         {
             var managers = _managersHandler.GetAll();

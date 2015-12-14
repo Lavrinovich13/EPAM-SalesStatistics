@@ -34,7 +34,7 @@ namespace SalesStatistics.Models
         public string Role { get; set; }
 
         [Required(ErrorMessage = "Field Password is required.")]
-        [StringLength(18, ErrorMessage = "Not less {2} symbols and not more {1}.", MinimumLength = 6)]
+        [StringLength(18, ErrorMessage = "Not less 6 symbols and not more 18.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         [RegularExpression("[a-z0-9_]+", ErrorMessage = "Password can inclide only a-z, 0-9 and _.")]

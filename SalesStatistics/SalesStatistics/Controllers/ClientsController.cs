@@ -23,16 +23,6 @@ namespace SalesStatistics.Controllers
 
             return View("Clients", GetClients());
         }
-
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Clients()
-        {
-            Mapper.CreateMap<BL.Models.Client, Client>();
-
-            return PartialView("ClientsGrid", GetClients());
-        }
-
         
         protected IEnumerable<Client> GetClients()
         {

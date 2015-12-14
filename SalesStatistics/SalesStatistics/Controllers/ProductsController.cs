@@ -24,15 +24,6 @@ namespace SalesStatistics.Controllers
             return View("Products", GetProducts());
         }
 
-        [HttpGet]
-        [Authorize(Roles = "Admin")]
-        public ActionResult Products()
-        {
-            Mapper.CreateMap<BL.Models.Product, Product>();
-
-            return PartialView("ProductsGrid", GetProducts());
-        }
-
         protected IEnumerable<Product> GetProducts()
         {
             var products = _productsHandler.GetAll();
